@@ -1,0 +1,492 @@
+[
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "profileAddress",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "profileIndex",
+				"type": "uint256"
+			}
+		],
+		"name": "ProfileCreated",
+		"type": "event"
+	},
+	{
+		"inputs": [],
+		"name": "PoziomyDostepuMPP",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"name": "adresyPersonPoUniqueId",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"name": "adresyProfiliPoUniqueId",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "beaconProfili",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "uniqueId",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "organization1",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "organization2",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "organization3",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "visibleName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "visibleSirname",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "visibleInfo",
+				"type": "string"
+			}
+		],
+		"name": "createProfile",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "uniqueId",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "organization1",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "organization2",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "organization3",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "visibleName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "visibleSirname",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "visibleInfo",
+				"type": "string"
+			}
+		],
+		"name": "createProfileUpgradeable",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "uniqueId",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "organization1",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "organization2",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "organization3",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "visibleName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "visibleSirname",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "visibleInfo",
+				"type": "string"
+			}
+		],
+		"name": "createProfileUpgradeableWithEmergencyExit",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "kontoDoSprawdzenia",
+				"type": "address"
+			}
+		],
+		"name": "czyIstniejeProfil",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "czyIstnieje",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "konto",
+				"type": "address"
+			}
+		],
+		"name": "czyZweryfikowanyProfil",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "czyDopuszczalny",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "index",
+				"type": "uint256"
+			}
+		],
+		"name": "deployedProfiles",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "index",
+				"type": "uint256"
+			}
+		],
+		"name": "indexUnikalnychProfili",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "uniqueId",
+				"type": "string"
+			}
+		],
+		"name": "indexyUnikalnychProfili",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_PoziomyDostepuMPP",
+				"type": "address"
+			}
+		],
+		"name": "initialize",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "kontoDoSprawdzenia",
+				"type": "address"
+			}
+		],
+		"name": "pokazUniqueIdProfiluZAdresuTego",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "uniqueIdKonta",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			}
+		],
+		"name": "rejestrAdminowProfili",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			}
+		],
+		"name": "rejestrProfili",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "uniqueId",
+				"type": "string"
+			}
+		],
+		"name": "rejestrUnikalnychProfili",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "newBeaconProfili",
+				"type": "address"
+			}
+		],
+		"name": "setBeaconProfili",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "poziomy",
+				"type": "address"
+			}
+		],
+		"name": "setPoziomyDostepuMPP",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "konto",
+				"type": "address"
+			}
+		],
+		"name": "sprawdzenieProfilu",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "czyDopuszczalny",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "totalProfiles",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+]

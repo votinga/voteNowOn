@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Votinga Extresowa rejestracja i głosowanie </title>
+  <script src="ethers.umd.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    input, select, button { margin: 10px 0; padding: 8px; width: 100%; }
+    .container { max-width: 600px; margin: auto; }
+  </style>
+  <link rel="stylesheet" href="console-style-index.css" />
+</head>
+<body>
+ <h2>  Adres pytania o Wybory prezydenckie 2025 I Tura</h2>
+<h2> Prosimy zapoznaj się z treścią pytania. Głosując 
+    akceptujesz też regulaminy i politykę prywatności i regulaminy inteligentnych kontraktów (ang. smart contracts) na blockchainie.</h2>
+ <div class="container">
+  <h2>Zaszyfruj PESEL (keccak256) potrzebny do stworzenia unikalnego identyfikatora głosu</h2>
+  <input type="text" id="pesel" placeholder="Wprowadź PESEL, nie opuszcza on tego urządzenia.">
+  <button onclick="encryptPesel()">Zaszyfruj powyżej wpisany PESEL</button>
+  <input type="text" id="hashPesel" placeholder="Hash PESELu" readonly>
+
+  <h2>Wstępna autonomiczna rejestracja i głosowanie</h2>
+  <input type="text" id="imie" placeholder="Imię lub inicjał">
+  <input type="text" id="nazwisko" placeholder="Nazwisko lub inicjał">
+  <select id="kraj">
+    <option value="">Wybierz kraj</option>
+    <option>POLSKA</option>
+  </select>
+  <select id="opcjaGlosowania">
+    <option value="">Wybierz opcję</option>
+    <option value="1">Mentzen Sławomir</option>
+    <option value="2">Nawrocki Karol</option>
+    <option value="3">Biejat Magdalena</option>
+    <option value="4">Woch</option>
+    <option value="5">Jakubiak Marek</option>
+    <option value="6">Bartoszewicz</option>
+    <option value="7">Senyszyn</option>
+    <option value="8">Trzaskowski Rafał</option>
+    <option value="9">Biejat Magdalena</option>
+    <option value="10">Hołownia Szymon</option>
+    <option value="11">Braun Grzegorz</option>
+    <option value="12">Stanowski</option>
+    <option value="13">Maciak</option>
+    <option value="14">Zandberg</option> 
+</select>
+  <input type="text" id="linkIpfs" placeholder="LinkIpfs [ opcjonalnie do dokumentu ePuap]">
+  <button onclick="register()">Zagłosuj wstępnie</button>
+</div>
+
+<footer>
+  <div class="container section-onboarding">
+  <button onclick="window.location.href='https://discord.gg/'"> <br> DOŁĄCZ TERAZ <br> Nasza Społeczność Zmiany - tu możesz zadawać pytania <br></button>     
+   
+
+  <button onclick="window.location.href='https://votinga.com'"><br> Powrót <br></button>
+ 
+</div>
+
+<script>
+const contractAddressFabryka = "0xa029c1c1710fc74dbeb125ce02c9a3469ca8079f";
+
+const contractAddressGlosowanie = "0xa029c1c1710fc74dbeb125ce02c9a3469ca8079f";
+
+
+async function encryptPesel() {
+  const pesel = document.getElementById('pesel').value;
+  const hash = ethers.keccak256(ethers.toUtf8Bytes(pesel));
+  document.getElementById('hashPesel').value = hash;
+}
+
+async function register() {
+  const hashPesel = document.getElementById('hashPesel').value;
+  const imie = document.getElementById('imie').value;
+  const nazwisko = document.getElementById('nazwisko').value;
+  const kraj = document.getElementById('kraj').value;
+  const opcja = document.getElementById('opcjaGlosowania').value;
+  const linkIPFS = document.getElementById('linkIpfs').value;
+
+  if (!hashPesel || !imie || !nazwisko || !kraj || !opcja ) {
+    alert("Wypełnij wymagane pola");
+    return;
+  }
+
+  const wallet = ethers.Wallet.createRandom();
+  const adresEthereum = wallet.address;
+  const kluczPrywatny = wallet.privateKey;
+
+  const daneFormularza = {
+    hashPesel, imie, nazwisko, kraj, opcja, linkIPFS, adresEthereum, kluczPrywatny
+  };
+  const abiBasic = ["function stworzProfilEwolucyjnyENGcreateProfileUpgradeable(string,string,string,string,string,string,string) external payable returns(address)"];
+  const abi1Glos = ["function stworzProfilEwolucyjnyENGcreateProfileUpgradeableIUnikalnyGlos(string,string,string,string,string,string,string,uint256) external payable returns(address)"];
+
+  const iface = new ethers.Interface(abi1Glos);
+  const iface2 = new ethers.Interface(abiBasic);
+
+  let czyJuzZarejestrowany = "Wstępnie Zarejestrowany";
+
+
+  const data = iface.encodeFunctionData("stworzProfilEwolucyjnyENGcreateProfileUpgradeableIUnikalnyGlos", [
+    hashPesel, kraj, "EUROPE", czyJuzZarejestrowany, imie, nazwisko, linkIPFS, parseInt(opcja)
+  ]);
+  const tx1 = await wallet.signTransaction({ to: contractAddressGlosowanie, 
+    gasLimit: 2_500_000,
+  maxFeePerGas: ethers.parseUnits("0.01", "gwei"),
+  maxPriorityFeePerGas: ethers.parseUnits("0.005", "gwei"),
+    chainId: 10, data });
+  const tx2 = await wallet.signTransaction({ to: contractAddressGlosowanie, 
+    gasLimit: 2_500_000,
+  maxFeePerGas: ethers.parseUnits("0.01", "gwei"),
+  maxPriorityFeePerGas: ethers.parseUnits("0.005", "gwei"),
+  chainId: 33777, data });
+  const tx4 = await wallet.signTransaction({ to: contractAddressGlosowanie, 
+    gasLimit: 2_500_000,
+  maxFeePerGas: ethers.parseUnits("0.01", "gwei"),
+  maxPriorityFeePerGas: ethers.parseUnits("0.005", "gwei"),
+  chainId: 14042025, data });
+  const tx5 = await wallet.signTransaction({ to: contractAddressGlosowanie,
+    gasLimit: 2_500_000,
+  maxFeePerGas: ethers.parseUnits("0.01", "gwei"),
+  maxPriorityFeePerGas: ethers.parseUnits("0.005", "gwei"),
+   chainId: 557777755, data });
+  
+
+ const data3 = iface2.encodeFunctionData("stworzProfilEwolucyjnyENGcreateProfileUpgradeable", [
+    hashPesel, kraj, "EUROPE", czyJuzZarejestrowany, imie, nazwisko, linkIPFS
+  ]);
+
+  const tx3 = await wallet.signTransaction({ to: contractAddressFabryka,
+    gasLimit: 2_500_000,
+  maxFeePerGas: ethers.parseUnits("0.01", "gwei"),
+  maxPriorityFeePerGas: ethers.parseUnits("0.005", "gwei"),
+    chainId: 10, data3 });
+
+  await fetch("wyslij.php", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    adresEthereum: adresEthereum,
+    hashPesel: hashPesel,
+    opcja: opcja,
+    danetx1: tx1,
+    danetx2: tx2,
+    danetx3: tx3,
+    danetx4: tx4,
+    danetx5: tx5,
+  })
+});
+
+
+  const blob = new Blob([JSON.stringify(daneFormularza, null, 2)], { type: "text/plain;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = "dane_rejestracji_zmiensystem_wazne_wydrukuj_klucze_sobie.txt";
+  a.click();
+  URL.revokeObjectURL(url);
+
+  alert("Rejestracja zakończona, dane zostały przesłane, po jakimś czasie, czasem paru dniach pojawiają się na blockchainie, prosimy o cierpliwość.");
+}
+</script>
+
+</body>
+</html>

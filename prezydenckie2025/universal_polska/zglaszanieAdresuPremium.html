@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Zgłaszanie Adresu – Premium</title>
+  <link rel="stylesheet" href="console-style.css" />
+  
+  <style>
+    .tx-levels {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 1000;
+      display: flex;
+      gap: 10px;
+    }
+    .tx-button {
+      padding: 10px 16px;
+      border: 2px solid transparent;
+      font-weight: bold;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .tx-button.selected {
+      border: 7px solid violet;
+    }
+    .tx-basic {
+      background-color: white;
+      color: black;
+    }
+    .tx-premium {
+      background-color: gold;
+      color: black;
+    }
+    .tx-plat {
+      background-color: indigo;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+<div class="tx-levels">
+  <button class="tx-button tx-basic" onclick="setTxLevel('basic')" id="btn-basic">Transakcje Podstawowe</button>
+  <button class="tx-button tx-premium selected" onclick="setTxLevel('premium')" id="btn-premium">Transakcje Premium</button>
+  <button class="tx-button tx-plat" onclick="setTxLevel('plat')" id="btn-plat">Transakcje Platynowe</button>
+</div>
+
+<div id="messageBox">
+⚠️ Uwaga – Zgłaszanie adresu portfela do rejestru
+
+Przed użyciem którejkolwiek z poniższych funkcji, zapoznaj się z ich działaniem. Część z nich może mieć nieodwracalne skutki, np. zgłoszenie adresu do systemu jako deklaracja zamiaru uczestnictwa w wyborach.
+
+Pamiętaj, że:
+- Adres zostaje zapisany publicznie w sieci Optimism
+- Akcja jest widoczna publicznie i nie może być usunięta
+- Użycie niektórych funkcji może wymagać przesłania tokenów ETH
+
+Kliknij przycisk poniżej, aby kontynuować i świadomie wyświetlić dostępne funkcje kontraktu.
+</div>
+<h1>Zgłaszanie adresu portfela do rejestru Premium</h1>
+<div id="contractFunctions"></div>
+
+<script src="./ethers.umd.js"></script>
+<script>
+  const abiPath = './ABIs/Polska/0xa029c1c1710fc74dbeb125ce02c9a3469ca8079f.PLfactoryOfProfilesIczlowieczenstwo.abi';
+const contractAddress = '0xa029c1c1710fc74dbeb125ce02c9a3469ca8079f';
+let txLevel = 'premium';
+
+function setTxLevel(level) {
+  txLevel = level;
+  document.querySelectorAll('.tx-button').forEach(btn => btn.classList.remove('selected'));
+  document.getElementById('btn-' + level).classList.add('selected');
+}
+
+async function loadContractFunctions(contractAddress, contractABI) {
+  const provider = new ethers.BrowserProvider(window.ethereum);
+  const signer = await provider.getSigner();
+  const contract = new ethers.Contract(contractAddress, contractABI, signer);
+  const container = document.getElementById('contractFunctions');
+  container.innerHTML = '';
+
+  contractABI.forEach(func => {
+    if (func.type === "function") {
+      const funcDiv = document.createElement('div');
+      funcDiv.className = func.stateMutability;
+
+      const button = document.createElement('button');
+      button.textContent = func.name;
+      button.className = func.stateMutability;
+
+      const inputsDiv = document.createElement('div');
+      func.inputs.forEach(input => {
+        const inputLabel = document.createElement('label');
+        inputLabel.textContent = input.name + ' (' + input.type + '): ';
+        const inputElement = document.createElement('input');
+        inputElement.setAttribute('id', func.name + '_' + input.name);
+        inputElement.setAttribute('type', 'text');
+        inputsDiv.appendChild(document.createElement('br'));
+        inputsDiv.appendChild(inputLabel);
+        inputsDiv.appendChild(inputElement);
+      });
+
+      button.addEventListener('click', async () => {
+        const args = func.inputs.map(input => {
+          return document.getElementById(func.name + '_' + input.name).value;
+        });
+
+        try {
+          let result;
+          if (func.stateMutability !== 'view' && func.stateMutability !== 'pure') {
+            let value;
+            if (txLevel === 'premium') value = ethers.parseEther("0.001");
+            else if (txLevel === 'plat') value = ethers.parseEther("0.071");
+            else value = ethers.parseEther("0");
+            result = await contract[func.name](...args, { value });
+          } else {
+            result = await contract[func.name](...args);
+          }
+
+          let formatted = typeof result === 'object'
+            ? JSON.stringify(result, null, 2)
+            : String(result);
+          formatted = formatted
+            .replace(/{/g, '\n{\n')
+            .replace(/}/g, '\n}\n')
+            .replace(/,/g, '\n')
+            .replace(/\[/g, '\n[\n')
+            .replace(/\]/g, '\n]\n');
+          document.getElementById('messageBox').innerText = formatted;
+        } catch (error) {
+          document.getElementById('messageBox').innerText = 'Error: ' + error.message;
+        }
+      });
+
+      funcDiv.appendChild(button);
+      funcDiv.appendChild(inputsDiv);
+      container.appendChild(funcDiv);
+    }
+  });
+}
+
+(async function init() {
+  try {
+    const abi = await fetch(abiPath).then(res => res.json());
+    loadContractFunctions(contractAddress, abi);
+  } catch (err) {
+    document.getElementById('messageBox').innerText = 'Błąd podczas ładowania ABI: ' + err.message;
+  }
+})();
+</script>
+
+</body>
+</html>

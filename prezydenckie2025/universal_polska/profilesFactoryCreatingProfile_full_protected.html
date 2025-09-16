@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tworzenie Profili – Votinga</title>
+  <link rel="stylesheet" href="console-style.css" />
+  <style>
+    .tx-levels {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 1000;
+      display: flex;
+      gap: 10px;
+    }
+    .tx-button {
+      padding: 10px 16px;
+      border: 2px solid transparent;
+      font-weight: bold;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .tx-button.selected {
+      border: 7px solid violet;
+    }
+    .tx-basic {
+      background-color: white;
+      color: black;
+    }
+    .tx-premium {
+      background-color: gold;
+      color: black;
+    }
+    .tx-plat {
+      background-color: indigo;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+<div class="tx-levels">
+  <button class="tx-button tx-basic" onclick="setTxLevel('basic')" id="btn-basic">Transakcje Podstawowe</button>
+  <button class="tx-button tx-premium selected" onclick="setTxLevel('premium')" id="btn-premium">Transakcje Premium</button>
+  <button class="tx-button tx-plat" onclick="setTxLevel('plat')" id="btn-plat">Transakcje Platynowe</button>
+</div>
+
+<!-- [PROTECTED-CONTENT] zaczyna się tu -->
+<div id="messageBox">
+⚠️ Uwaga – Tworzenie Profili Obywatelskich
+
+Zanim przystąpisz do tworzenia profilu:
+- Potwierdź swoją tożsamość i obywatelstwo za pomocą odpowiednich narzędzi Votinga.
+- Profil będzie publiczny na blockchainie – nie można go później usunąć.
+- Dane mogą być użyte w procesach walidacji i głosowania.
+
+Postępuj uważnie. Wybór poziomu transakcji określi koszt oraz sposób rejestracji.
+</div>
+<!-- [PROTECTED-CONTENT] kończy się tutaj -->
+
+<h1>Tworzenie Profilu Tożsamości – Fabryka Profili</h1>
+<!-- Pozostała zawartość zostaje bez zmian -->
+<!-- Komunikaty o PESEL i szyfrowaniu też będą w pliku -->

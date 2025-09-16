@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tworzenie Profili – Votinga</title>
+  <script src="./ethers.umd.js"></script>
+  <script>
+  
+window.addEventListener('DOMContentLoaded', async () => {
+  listABIs();
+  try {
+    if (!window.ethereum) return;
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const signer = await provider.getSigner();
+    const address = await signer.getAddress();
+    const balance = await provider.getBalance(address);
+    const ethBalance = parseFloat(ethers.formatEther(balance));
+
+    console.log('Adres:', address);
+    console.log('Saldo ETH:', ethBalance);
+
+    if (ethBalance < 0.002) {
+      setTxLevel('basic');
+    } else if (ethBalance >= 0.002 && ethBalance < 0.2) {
+      setTxLevel('premium');
+    } else {
+      setTxLevel('plat');
+    }
+  } catch (err) {
+    console.warn("Błąd pobierania salda:", err.message);
+  }
+});
+
+  </script>
+</head>
+<body>
+<!-- Reszta kodu HTML – wiadomości, messageBox, formularze, itd. -->
+</body>
+</html>

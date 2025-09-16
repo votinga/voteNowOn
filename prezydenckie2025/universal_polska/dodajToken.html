@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+
+<title>Głosów Tokeny Dodawanie w Votinga PL: Cyfrowa Tożsamość Zdecentralizowana</title>
+</head>
+<body>
+    <button id="connectMetaMaskButton">Połącz z Walletem jak np. metamask</button>
+    <button id="addTokenButton1">Dołącz Token Ankiety 1: Pytanie o Votingę w Polsce</button>
+    <button id="addTokenButton2">Dołącz Token Ankiety 2: Pytanie o Prezydenta w Polsce w 2025</button>
+    <script src="./ethers.umd.js"></script>
+    <script>
+        let provider;
+        let signer;
+
+        async function checkNetwork() {
+    if (window.ethereum) {
+        try {
+            const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+            if (chainId !== '0xa') { // '0xa' to hex dla 10 (Optimism)
+                console.warn('Nie jesteś na sieci Optimistic Ethereum! Przełączanie...');
+                await switchToOptimism();
+            } else {
+                console.log('Jesteś na właściwej sieci: Optimistic Ethereum');
+            }
+        } catch (error) {
+            console.error('Błąd podczas sprawdzania sieci:', error);
+        }
+    } else {
+        console.log('MetaMask nie jest zainstalowany!');
+    }
+}
+
+async function switchToOptimism() {
+    try {
+        await window.ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: '0xa' }] // 0xa = 10 (Optimism)
+        });
+        console.log('Przełączono na sieć Optimistic Ethereum');
+    } catch (error) {
+        if (error.code === 4902) {
+            console.log('Sieć nie jest dodana do MetaMask, dodawanie...');
+            await addOptimismNetwork();
+        } else {
+            console.error('Błąd podczas przełączania sieci:', error);
+        }
+    }
+}
+
+async function addOptimismNetwork() {
+    try {
+        await window.ethereum.request({
+            method: 'wallet_addEthereumChain',
+            params: [{
+                chainId: '0xa',
+                chainName: 'Optimistic Ethereum',
+                rpcUrls: ['https://mainnet.optimism.io'],
+                nativeCurrency: {
+                    name: 'Ethereum',
+                    symbol: 'ETH',
+                    decimals: 18
+                },
+                blockExplorerUrls: ['https://optimistic.etherscan.io/']
+            }]
+        });
+        console.log('Sieć Optimistic Ethereum została dodana!');
+    } catch (error) {
+        console.error('Błąd podczas dodawania sieci:', error);
+    }
+} 
+        async function connectMetaMask() {
+            if (window.ethereum) {
+                try {
+                    await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    console.log('Połączono z Walletem - MetaMask!');
+                    
+                    // Pobranie aktualnego konta i nasłuchiwanie zmian
+                    const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+                    console.log('Aktualne konto:', accounts[0]);
+
+                    // Nasłuchiwanie na zmianę konta w MetaMask
+                    window.ethereum.on('accountsChanged', (newAccounts) => {
+                        console.log('Konto w MetaMask zostało zmienione:', newAccounts[0]);
+                        alert('Zmieniono konto MetaMask. Połącz się ponownie.');
+                    });
+
+                    // Nasłuchiwanie na zmianę sieci
+                    window.ethereum.on('chainChanged', (chainId) => {
+                        console.log('Zmieniono sieć MetaMask:', chainId);
+                        alert('Zmieniono sieć w MetaMask. Upewnij się, że jesteś na właściwej sieci (Optimistic).');
+                    });
+
+                } catch (error) {
+                    console.error('Błąd podczas łączenia z MetaMask:', error);
+                }
+            } else {
+                console.log('MetaMask nie jest zainstalowany!');
+            }
+        }
+
+        async function addTokenToMetaMask(tokenAddress, tokenSymbol, tokenDecimals, tokenImage) {
+            if (window.ethereum) {
+                try {
+                    const wasAdded = await window.ethereum.request({
+                        method: 'wallet_watchAsset',
+                        params: {
+                            type: 'ERC20',
+                            options: {
+                                address: tokenAddress,
+                                symbol: tokenSymbol,
+                                decimals: tokenDecimals,
+                                image: tokenImage,
+                            },
+                        },
+                    });
+
+                    if (wasAdded) {
+                        console.log(`Token ${tokenSymbol} został dodany do MetaMask!`);
+                    } else {
+                        console.log(`Dodanie tokena ${tokenSymbol} zostało odrzucone przez użytkownika.`);
+                    }
+                } catch (error) {
+                    console.error('Nie udało się dodać tokena', error);
+                }
+            } else {
+                console.log('Proszę zainstalować MetaMask!');
+            }
+        }
+
+        document.getElementById('connectMetaMaskButton').addEventListener('click', async () => {
+    await connectMetaMask();
+    await checkNetwork();
+});
+
+        document.getElementById('addTokenButton1').addEventListener('click', () => {
+            addTokenToMetaMask(
+                '0x9Ef737b0C422986F9398b6560c7F93B0f8682B1C',
+                'dialog',
+                0,
+                'https://votinga.com/grafiki/votinga_logo.png'
+            );
+        });
+
+        document.getElementById('addTokenButton2').addEventListener('click', () => {
+            addTokenToMetaMask(
+                '0xe6017bDDc4044e719342DB608ee7A3dd4a2CC66B',
+                'PREZYDENT2025PL',
+                0,
+                'https://votinga.com/grafiki/votinga_logo.png'
+            );
+        });
+    </script>
+</body>
+</html>

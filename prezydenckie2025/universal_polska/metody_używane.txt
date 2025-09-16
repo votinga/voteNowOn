@@ -1,0 +1,5 @@
+Call
+0x2b92b48f
+Method - potwierdzeniePolskiegoObywatelstwa
+
+

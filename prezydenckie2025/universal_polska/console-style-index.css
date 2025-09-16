@@ -1,0 +1,119 @@
+body {
+  margin: 0;
+  padding: 20px;
+  background-color: #1e1e1e;
+  color: #b8d8ff; /* niebieskawy tekst */
+  font-family: 'Courier New', monospace;
+  font-size: 18px;
+}
+
+h1, h2, h3, label {
+  color: #f4d03f;
+}
+
+button {
+  background-color: #f1c40f;
+  border: none;
+  padding: 10px 20px;
+  color: black;
+  font-weight: bold;
+  margin: 10px 0;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+button {
+  width: 100%;
+  min-height: 7vh;
+  font-size: 3.5vh;
+  margin: 10px 0;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 12px; /* <-- łagodne zaokrąglenie */
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #f7dc6f;
+}
+
+input, select {
+  margin: 5px 0;
+  padding: 6px 10px;
+  width: 100%;
+  background-color: #333;
+  color: #f9e79f;
+  border: 1px solid #555;
+  border-radius: 4px;
+}
+
+#messageBox, .messageBox {
+  background-color: #0d0d0d;
+  color: #b8d8ff;
+  border: 2px solid #d2b48c;
+  padding: 20px;
+  white-space: pre-wrap;
+  font-size: 16px;
+  line-height: 1.5;
+  min-height: 500px;
+  margin: 30px auto;
+  max-width: 90%;
+  font-family: monospace;
+  box-shadow: inset 0 0 20px #b3b300;
+}
+
+/* Retro migający kursor */
+#messageBox::after, .messageBox::after {
+  content: '█';
+  animation: blink 1s infinite;
+}
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* Sekcja onboarding */
+.section-onboarding {
+  background-color: #003366; /* głęboki niebieski */
+  padding: 20px;
+  margin-top: 20px;
+}
+.section-onboarding button {
+  background-color: #3399ff;
+  color: #fff;
+}
+.section-onboarding button:hover {
+  background-color: #66b3ff;
+}
+
+/* Sekcja zaawansowana */
+.section-advanced {
+  background: linear-gradient(145deg, #330066, #003366); /* fiolet + niebieski */
+  padding: 20px;
+  margin-top: 20px;
+}
+.section-advanced button {
+  background-color: #9966ff;
+  color: #fff;
+}
+.section-advanced button:hover {
+  background-color: #b380ff;
+}
+
+/* Kontrakty (opcjonalnie) */
+.view {
+  border-left: 4px solid #3498db;
+  padding-left: 10px;
+  margin-bottom: 20px;
+}
+.payable {
+  border-left: 4px solid gold;
+  padding-left: 10px;
+  margin-bottom: 20px;
+}
+.nonpayable {
+  border-left: 4px solid orange;
+  padding-left: 10px;
+  margin-bottom: 20px;
+}

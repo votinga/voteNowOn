@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Votinga PL: Tworzenie Profilu Tożsamości Zdecentralizowanej</title>
+  <link rel="stylesheet" href="console-style.css" />
+  <link rel="stylesheet" href="console-style-premium.css" />
+  <style>
+
+  </style>
+</head>
+<body>
+
+<div class="tx-levels">
+  <button class="tx-button tx-basic" onclick="setTxLevel('basic')" id="btn-basic">Transakcje Podstawowe z Wolontariuszami</button>
+  <button class="tx-button tx-premium selected" onclick="setTxLevel('premium')" id="btn-premium">Transakcje Premium</button>
+  <button class="tx-button tx-plat" onclick="setTxLevel('plat')" id="btn-plat">Transakcje Priorytetowe</button>
+</div>
+
+<div id="messageBox">Gotowy do interakcji. Kliknij „pokaż funkcje” przy adresie Fabryki Profili...</div>
+
+<h1>Votinga Protocol używasz Fabryki Profili tworzącej Zdecentralizowane Tożsamości Cyfrowe</h1>
+<a href="#encryptionForm"><button>Wylicz UniqueId</button></a><br>
+<select id="abiSelector"></select>
+<button onclick="loadSelectedContract()">Pokaż funkcje jakie mogę użyć</button>
+<div id="contractFunctions"></div>
+
+<script src="./ethers.umd.js"></script>
+<script>
+const abiFolderPath = './1profilesFactoryJustCreate/';
+let txLevel = 'premium';
+
+function setTxLevel(level) {
+  txLevel = level;
+  document.querySelectorAll('.tx-button').forEach(btn => btn.classList.remove('selected'));
+  document.getElementById('btn-' + level).classList.add('selected');
+}
+
+async function listABIs() {
+  const files = ['0xa029c1c1710fc74dbeb125ce02c9a3469ca8079f.PolskaFabrykaProfiliVotinga.abi'];
+  const selector = document.getElementById('abiSelector');
+  files.forEach(file => {
+    const option = document.createElement('option');
+    option.value = file;
+    option.innerText = file.split('.abi')[0];
+    selector.appendChild(option);
+  });
+}
+
+async function loadSelectedContract() {
+  const selector = document.getElementById('abiSelector');
+  const abiFile = selector.value;
+  const contractAddress = abiFile.split('.')[0];
+  const contractABI = await fetch(abiFolderPath + abiFile).then(response => response.json());
+  loadContractFunctions(contractAddress, contractABI);
+}
+
+async function loadContractFunctions(contractAddress, contractABI) {
+  const provider = new ethers.BrowserProvider(window.ethereum);
+  const signer = await provider.getSigner();
+  const contract = new ethers.Contract(contractAddress, contractABI, signer);
+
+  const container = document.getElementById('contractFunctions');
+  container.innerHTML = '';
+  contractABI.forEach(func => {
+    if (func.type === "function") {
+      const funcDiv = document.createElement('div');
+      funcDiv.className = func.stateMutability;
+
+      const button = document.createElement('button');
+      button.textContent = func.name;
+      button.className = func.stateMutability;
+
+      const inputsDiv = document.createElement('div');
+      func.inputs.forEach(input => {
+        const inputLabel = document.createElement('label');
+        inputLabel.textContent = input.name + ' (' + input.type + '): ';
+        const inputElement = document.createElement('input');
+        inputElement.setAttribute('id', func.name + '_' + input.name);
+        inputElement.setAttribute('type', 'text');
+        inputsDiv.appendChild(document.createElement('br'));
+        inputsDiv.appendChild(inputLabel);
+        inputsDiv.appendChild(inputElement);
+      });
+
+      button.addEventListener('click', async () => {
+        const args = func.inputs.map(input => {
+          return document.getElementById(func.name + '_' + input.name).value;
+        });
+
+        let value;
+        if (txLevel === 'premium') value = ethers.parseEther("0.001");
+        else if (txLevel === 'plat') value = ethers.parseEther("0.071");
+        else value = ethers.parseEther("0");
+
+        try {
+          const result = await contract[func.name](...args, { value });
+          let formatted = typeof result === 'object'
+            ? JSON.stringify(result, null, 2)
+            : String(result);
+          formatted = formatted
+            .replace(/{/g, '\n{\n')
+            .replace(/}/g, '\n}\n')
+            .replace(/,/g, '\n')
+            .replace(/\[/g, '\n[\n')
+            .replace(/\]/g, '\n]\n');
+          document.getElementById('messageBox').innerText = formatted;
+        } catch (error) {
+          document.getElementById('messageBox').innerText = 'Error: ' + error.message;
+        }
+      });
+
+      funcDiv.appendChild(button);
+      funcDiv.appendChild(inputsDiv);
+      container.appendChild(funcDiv);
+    }
+  });
+}
+
+function encrypt() {
+  const peselInput = document.getElementById('pesel').value;
+  const encryptedUniqueId = ethers.keccak256(ethers.toUtf8Bytes(peselInput));
+  document.getElementById('encryptedUniqueId').value = encryptedUniqueId;
+  document.getElementById('uniqueId').value = encryptedUniqueId;
+}
+
+window.addEventListener('DOMContentLoaded', listABIs);
+</script>
+
+<footer>
+  <h2>UniqueID Encryption</h2>
+  <form id="encryptionForm">
+    <label for="pesel">UniqueID (Your PESEL):</label>
+    <input type="text" id="pesel" name="pesel">
+    <button type="button" onclick="encrypt()">Encrypt / Szyfrowanie</button><br><br>
+
+    <label for="encryptedUniqueId">Encrypted UniqueID:</label>
+    <input type="text" id="encryptedUniqueId" name="encryptedUniqueId" readonly>
+  </form>
+  <br><br>
+  Pamiętaj o weryfikacji profilu u walidatora i potwierdzeniu obywatelstwa. Walidatorów znajdziesz na forum Discord i lokalnych spotkaniach.
+  <br><br>
+  Exploratory bloków:
+  <a href="https://optimistic.etherscan.io//">Optimistic etherscan</a> |
+  <a href="https://optimism.blockscout.com/">Optimistic block scout</a>
+</footer>
+</body>
+</html>

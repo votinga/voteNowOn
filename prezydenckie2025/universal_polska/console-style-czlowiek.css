@@ -1,0 +1,140 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #0e0e10;
+    color: #ddd;
+    font-family: 'Courier New', monospace;
+    font-size: 18px;
+    padding-top: 5vh; /* biała belka u góry */
+  }
+  
+  body::before {
+    content: "";
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5vh;
+    background-color: white;
+    z-index: 999;
+  }
+  
+  /* MessageBox (komunikaty terminalowe) */
+  .messageBox, #messageBox {
+    background-color: #1a1a1d;
+    color: #ffffff;
+    border: 2px solid #4a4a4a;
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 16px;
+    line-height: 1.5;
+    min-height: 500px;
+    margin: 30px auto;
+    max-width: 90%;
+    font-family: monospace;
+    box-shadow: inset 0 0 10px #222;
+  }
+  
+  /* Migający kursor retro */
+  #messageBox::after, .messageBox::after {
+    content: '█';
+    animation: blink 1s infinite;
+  }
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+  
+  /* Ogólne przyciski */
+  button {
+    width: 100%;
+    min-height: 7vh;
+    font-size: 3.5vh;
+    margin: 10px 0;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Sekcja powitalna */
+  .section-onboarding {
+    background-color: #111111;
+    padding: 30px 20px;
+  }
+  .section-onboarding button {
+    background-color: #f1c40f;
+    color: #000;
+  }
+  .section-onboarding button:hover {
+    background-color: #ffe066;
+  }
+  
+  /* Sekcja zaawansowana */
+  .section-advanced {
+    background: linear-gradient(145deg, #1b0e3f, #0c1e3a);
+    padding: 30px 20px;
+  }
+  .section-advanced button {
+    background-color: #4b0082;
+    color: #d0e2ff;
+  }
+  .section-advanced button:hover {
+    background-color: #673ab7;
+  }
+  
+  /* Stylizacja funkcji kontraktowych */
+  .view {
+    border-left: 4px solid #3498db;
+    padding-left: 10px;
+    margin-bottom: 20px;
+  }
+  .payable {
+    border-left: 4px solid gold;
+    padding-left: 10px;
+    margin-bottom: 20px;
+  }
+  .nonpayable {
+    border-left: 4px solid orange;
+    padding-left: 10px;
+    margin-bottom: 20px;
+  }
+  
+  /* Styl przycisku PLATYNOWEGO */
+  .tx-plat {
+    background-color: indigo !important;
+    color: white !important;
+  }
+  
+  .tx-levels {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+    display: flex;
+    gap: 10px;
+  }
+  .tx-button {
+    padding: 10px 16px;
+    border: 2px solid transparent;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  .tx-button.selected {
+    border: 7px solid violet;
+  }
+  .tx-basic {
+    background-color: white;
+    color: black;
+  }
+  .tx-premium {
+    background-color: gold;
+    color: black;
+  }
+  .tx-plat {
+    background-color: indigo;
+    color: white;
+  }

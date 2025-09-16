@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Votinga Polska - zdecentralizowany system konfirmacji tożsamości i obywatelstwa</title>
+    <style>
+        body {
+            font-size: 24px;
+            background-color: #ffffff;
+            color: #000000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: auto;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            max-width: 400px;
+            margin: 10px auto;
+            padding: 10px;
+            background-color: #2a1ed2; /* ciemny pomarańcz */
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 24px;
+        }
+
+        button:hover {
+            background-color: #8b4513; /* ciemny brąz */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Votinga . com</h1>
+        <h1>Voting: prawybory prezydenckie 2025 i inne opinie oraz głosowania w Polsce </h1>
+        <h1>IMPORTANT: you need to activate metamask and connect to this site in metamask wallet/other crypto wallet plugin to use any of menu items</h1>
+        <h2>You need profile verification to vote - use discord to communicate with Protocol representative capable of verification</h2>
+        <h2>Używamy do głosowania głównie Optimistic Ethereum - pewien fork L2 ethereum, bardzo szybki, bezpieczny, wydajny i tani.</h2>
+        <h2>Optimistic Ethereum jest oznaczony czerwonym znaczkiem OP w metamask w lewym górnym rogu aplikacji jest wybór sieci</h2>
+        <h2> To tylko głosowanie współistniejące do normalnego głosowania papierowego.</h2>
+        <h3> Pamiętaj dopisać się do spisu wyborców w gminie gdzie chcesz głosować.</h3>
+        <h3> Votinga Polska to alternatywny system głosowania, walidacja dodatkowa wyniku głosowania zatwierdzanego przez PKW , i tak trzeba iść na wybory i wrzucić papierowy głos do urny</h3>
+  
+    </h3>
+    </div>
+
+    <div class="container">
+        <button onclick="goTo('czlowieczenstwoAdresu.html')">Krok 1 : Prośba o potwierdzenie kontroli człowieka nad adresem </button>
+        <button onclick="window.location.href='https://discord.gg/Pmgp6fdnZg'">Krok 2 : poproś społeczność - tu możesz potwierdzić adres</button>     
+           
+        <button onclick="goTo('profilesFactoryCreatingProfile.html')">Krok 3 : Stwórz profile</button>
+        
+        <button onclick="goTo('getVoteGeneralVoting1.html')">Krok 4 : [ po weryfikacji profilu  ] Votinga PL  czy ma być używana ? </button>
+       
+        <button onclick="goTo('getVotePobierzGlosPrezydenckie.html')">Pobierz token głosu do Prawyborów prezydenckich 2025 [ po weryfikacji profilu ]</button>
+        <button onclick="goTo('zaglosujPrezydenckieItura.html')">Zagłosuj w prawyborach Prezydenckich 2025</button>
+        
+        <button onclick="goTo('dodajToken.html')">Dodaj tokeny do metamask [ po weryfikacji profilu ]</button>
+
+        <button onclick="goTo('dodajTokenAP.html')">Dodaj token Aktywnej Partycypacji do metamask [ po weryfikacji profilu ]</button>
+        <br><br>
+        <button onclick="goTo('czlowieczenstwoAdresu.html')">Potwierdzanie czy człowiek ma adres </button>
+        <button onclick="window.location.href='https://discord.gg/Pmgp6fdnZg'">Społeczność - tu możesz potwierdzić adres</button>     
+        <button onclick="window.location.href='https://www.youtube.com/@VotingaVideoHelpers'">Instrukcje Video</button><br>
+        <button onclick="goTo('votingaFAQ.html')">Pytania i instrukcje FAQ</button>
+        <button onclick="goTo('checkProfileX.html')">Podgladanie danych Profilu na adresie</button>
+        <button onclick="goTo('usableAddresses.html')">Użyteczne adresy</button>    
+        <button onclick="goTo('TAPToken.html')">Token Aktywnej Partycypacji TAP Token</button>
+        <button onclick="goTo('responseViewer.html')">Odpowiedzi Podgląd - prezydenckie</button>
+         
+        <button onclick="window.location.href='https://polska.votinga.com/prezydenckie2025/prezydenci.html'">Powrót</button>     
+
+       
+        <br>
+        <h3><b><blue>Dla Walidatorów adresów i profili :</blue> </b></h3>
+        <br>
+
+        <button onclick="goTo('pelnaWeryfikacjaProfilu.html')">Pelna weryfikacja Profilu na adresie</button>
+        <button onclick="goTo('potwierdzanieObywatelstwaPL.html')">Potwierdzenie Polskiego obywatelstwa</button>
+        
+        <button onclick="goTo('extendingOfficeStaff.html')">Rozszerzanie grupy walidatorów</button>
+        
+        <button onclick="goTo('rootVotingaOrigins.html')">Votinga Polish Origins operacje i widoki na kontrakcie</button>
+   
+        
+        <button onclick="goTo('profileVerificationPL.html')">PL Weryfikacja Profilu przez Walidatorów</button>
+        <button onclick="goTo('profileVerification.html')">Weryfikacja Profilu przez Walidatorów</button>
+        <button onclick="goTo('residencyVerification.html')">2 ver Potwierdzenie Polskiego obywatelstwa</button>
+           
+        <button onclick="goTo('profileVerificationOfficeAssistance.html')">Profile Verification by Office Assistance</button>
+
+
+        <button onclick="goTo('profilesFactoryAdmin.html')">Factory of Profiles operacje i widoki na kontrakcie</button>
+
+       <button onclick="goTo('extendingOfficeRepresentation.html')">Biura partyjne walidacja przedstawicieli</button>
+       <button onclick="goTo('usableAddresses.html')">Użyteczne adresy</button>    
+        <button onclick="goTo('TAPToken.html')">Token Aktywnej Partycypacji TAP Token</button>
+        <button onclick="goTo('responseViewer.html')">Odpowiedzi Podgląd - prezydenckie</button>
+        <button onclick="goTo('TBD')">TBD Mark as Duplicate</button>  
+   
+        <button onclick="window.location.href='https://polska.votinga.com/prezydenckie2025/prezydenci.html'">Powrót</button>     
+
+    </div>
+
+    <script>
+        function goTo(page) {
+            const currentPath = window.location.pathname;
+            const directory = currentPath.substring(0, currentPath.lastIndexOf('/'));
+            window.location.href = directory + '/' + page;
+        }
+    </script>
+</body>
+</html>

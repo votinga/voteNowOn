@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Votinga PL: Pobierz głos w prawyborach 2025 prezydenckich</title>
+  <style>
+    body {
+      font-size: 24px;
+      background-color: #ffffff;
+      color: #000000;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      text-align: center;
+    }
+
+    button {
+      width: 100%;
+      max-width: 400px;
+      margin: 10px auto;
+      padding: 10px;
+      background-color: #d2691e; /* ciemny pomarańcz */
+      color: #ffffff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 24px;
+      display: block;
+    }
+
+    button:hover {
+      background-color: #8b4513; /* ciemny brąz */
+    }
+
+    select, input {
+      margin: 10px auto;
+      padding: 8px;
+      font-size: 24px;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+    <div id="messageBox">Votinga Protocol </div>
+    <br>
+    <br>
+    <br>
+    
+    <h1>  Wybory prezydenckie w Polsce 2025.</h1>
+    <h3> 0xe6017bDDc4044e719342DB608ee7A3dd4a2CC66B ,  Token głosu do pytania. Kliknij pokażd funkcję. Pobierz głos.  </h3>
+    <br> kliknij by zobaczyć opis zapytania zapisany w inteligentym kontrakcie.
+    <select id="abiSelector"></select>
+    <button onclick="loadSelectedContract()">Pokaż funkcje</button>
+    <div id="contractFunctions"></div>
+    <div id="backHome">
+      <a href="https://polska.votinga.com/glosuje/index.html">Powrót</a>
+    </div>
+  </div>
+
+  <script src="./ethers.umd.js"></script>
+  <script>
+    const abiFolderPath = './5votings/';
+
+    async function listABIs() {
+      // Przykładowa statyczna lista plików (zastąp ją własnym rozwiązaniem)
+      const files = ['0x011F3491E8cd32D64a4207C548Cb8ECD5131848A.PLvotingGetToken.Polska.prezydenckie.Wybory.abi'];
+      const selector = document.getElementById('abiSelector');
+      files.forEach(file => {
+        const option = document.createElement('option');
+        option.value = file;
+        option.innerText = file.split('.')[0]; // Usunięcie rozszerzenia dla wyświetlania
+        selector.appendChild(option);
+      });
+    }
+
+    async function loadSelectedContract() {
+      const selector = document.getElementById('abiSelector');
+      const abiFile = selector.value;
+      const contractAddress = abiFile.split('.')[0]; // Adres kontraktu jako nazwa pliku
+      const contractABI = await fetch(abiFolderPath + abiFile).then(response => response.json());
+      loadContractFunctions(contractAddress, contractABI);
+    }
+
+    async function loadContractFunctions(contractAddress, contractABI) {
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+      const contract = new ethers.Contract(contractAddress, contractABI, signer);
+
+      const container = document.getElementById('contractFunctions');
+      container.innerHTML = '';
+      contractABI.forEach(func => {
+        if (func.type === "function") {
+          const funcDiv = document.createElement('div');
+          funcDiv.className = func.stateMutability;
+
+          const button = document.createElement('button');
+          button.textContent = func.name;
+          button.className = func.stateMutability === 'view' || func.stateMutability === 'pure' ? 'view' :
+                              func.stateMutability === 'payable' ? 'payable' : 'nonpayable';
+
+          const inputsDiv = document.createElement('div');
+          func.inputs.forEach(input => {
+            const inputLabel = document.createElement('label');
+            inputLabel.textContent = input.name + ' (' + input.type + '): ';
+            const inputElement = document.createElement('input');
+            inputElement.setAttribute('id', func.name + '_' + input.name);
+            inputElement.setAttribute('type', 'text');
+            inputsDiv.appendChild(inputLabel);
+            inputsDiv.appendChild(inputElement);
+          });
+
+          button.addEventListener('click', async () => {
+            const args = func.inputs.map(input => {
+              return document.getElementById(func.name + '_' + input.name).value;
+            });
+            try {
+              const result = await contract[func.name](...args);
+              console.log(result);
+              document.getElementById('messageBox').innerText = `Function executed. Result: ${JSON.stringify(result)}`;
+            } catch (error) {
+              console.error(error);
+              document.getElementById('messageBox').innerText = 'Error: ' + error.message;
+            }
+          });
+
+          funcDiv.appendChild(button);
+          funcDiv.appendChild(inputsDiv);
+          container.appendChild(funcDiv);
+        }
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', (event) => {
+      listABIs();
+    });
+  </script>
+    <div id="backHome"><a href="https://polska.votinga.com/glosuje/index.html"></a>Powrót</div>
+</body>
+</html>

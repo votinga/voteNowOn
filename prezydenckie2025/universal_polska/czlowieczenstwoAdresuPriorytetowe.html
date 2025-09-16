@@ -1,0 +1,214 @@
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Weryfikacja Człowieczeństwa – Votinga</title>
+  <link rel="stylesheet" href="console-style.css" />
+  <style>
+    button p {
+      font-size: 2em;
+    }
+    .tx-levels {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 1000;
+      display: flex;
+      gap: 10px;
+    }
+    .tx-button {
+      padding: 10px 16px;
+      border: 2px solid transparent;
+      font-weight: bold;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .tx-button.selected {
+      border: 7px solid rgba(146, 1, 146, 0.856);
+    }
+    .tx-basic {
+      background-color: white;
+      color: black;
+    }
+    .tx-premium {
+      background-color: gold;
+      color: black;
+    }
+    .tx-plat {
+      background-color: indigo;
+      color: white;
+    }
+    #returnButton {
+      position: fixed;
+      bottom: 15px;
+      left: 15px;
+      padding: 10px 16px;
+      background-color: #d3d3d3;
+      border: 2px solid #888;
+      border-radius: 10px;
+      font-weight: bold;
+      text-decoration: none;
+      color: black;
+    }
+    #returnButton:hover {
+      background-color: #bdbdbd;
+    }
+  </style>
+</head>
+<body>
+
+<div class="tx-levels">
+  <button class="tx-button tx-basic" onclick="setTxLevel('basic')" id="btn-basic">Transakcje Podstawowe</button>
+  <button class="tx-button tx-premium selected" onclick="setTxLevel('premium')" id="btn-premium">Transakcje Premium</button>
+  <button class="tx-button tx-plat" onclick="setTxLevel('plat')" id="btn-plat">Transakcje Platynowe</button>
+</div>
+
+<div id="messageBox">
+  <protected>
+    Witam w Votinga. Wszystkie transakcje na blockchainie są nieodwracalne.
+  </protected><br><br>
+  <protected><h1>Zdecentralizowana konfirmacja, że danego adresu używa człowiek.</h1></protected>
+  <protected><h2>Przed rozpoczęciem tworzenia profilu wymagane jest potwierdzenie adresu, że go kontrolujesz jako człowiek.</h2></protected>
+  <protected><h2>Wgraj jako prośba o potwierdzenie jeden albo dwa adresy z metamask, lub innego walletu generatora ETH adresów.</h2></protected>
+  <protected><h2>Zacznij tworzyć profil wpisując Unique ID i skontaktuj się z weryfikatorem, on/ona poprowadzi cię dalej.</h2></protected>
+  <protected><h2>Profil będzie stworzony z tego adresu, który wiemy, że kontroluje człowiek.</h2></protected>
+  <protected><h2>Zainstaluj metamask (lub inny wallet), stwórz klucze, użyj metamask by połączyć się z siecią blockchain: Optimistic Ethereum</h2></protected>
+  <protected><h2>chain ID:10 , na stronie: https://chainlist.org/chain/10 są alternatywne rpc/serwery jeśli jest problem z połączeniem</h2></protected>
+  <protected><h2><green>Tak więc: kliknij "Pokaż funkcje .. " następnie adres z metamask wklej <br>
+     w pole o nazwie prośba o potwierdzenie adresu<br> kliknij prośbaO... metamask spyta się o potwierdzenie operacji </green></h2></protected>
+</div>
+
+<h1>Weryfikacja czy adres portfela kontroluje człowiek </h1>
+<select id="abiSelector"></select>
+<button onclick="loadSelectedContract()">Pokaż funkcje tego inteligentnego kontraktu</button>
+<div id="contractFunctions"></div>
+
+<script src="./ethers.umd.js"></script>
+<script>
+const abiFolderPath = './ABIs/Polska/';
+const files = ['0xa029c1c1710fc74dbeb125ce02c9a3469ca8079f.PLProsbaOpotwierdzenieAdresu.abi'];
+let txLevel = 'basic';
+
+function setTxLevel(level) {
+  txLevel = level;
+  document.querySelectorAll('.tx-button').forEach(btn => btn.classList.remove('selected'));
+  document.getElementById('btn-' + level).classList.add('selected');
+}
+
+function listABIs() {
+  const selector = document.getElementById('abiSelector');
+  files.forEach(file => {
+    const option = document.createElement('option');
+    option.value = file;
+    option.innerText = file.split('.abi')[0];
+    selector.appendChild(option);
+  });
+}
+
+async function loadSelectedContract() {
+  const selector = document.getElementById('abiSelector');
+  const abiFile = selector.value;
+  const contractAddress = abiFile.split('.')[0];
+  const contractABI = await fetch(abiFolderPath + abiFile).then(response => response.json());
+  loadContractFunctions(contractAddress, contractABI);
+}
+
+async function loadContractFunctions(contractAddress, contractABI) {
+  const provider = new ethers.BrowserProvider(window.ethereum);
+  const signer = await provider.getSigner();
+  const contract = new ethers.Contract(contractAddress, contractABI, signer);
+  const container = document.getElementById('contractFunctions');
+  container.innerHTML = '';
+
+  contractABI.forEach(func => {
+    if (func.type === "function") {
+      const funcDiv = document.createElement('div');
+      funcDiv.className = func.stateMutability;
+
+      const button = document.createElement('button');
+      button.textContent = func.name;
+      button.className = func.stateMutability;
+
+      const inputsDiv = document.createElement('div');
+      func.inputs.forEach(input => {
+        const inputLabel = document.createElement('label');
+        inputLabel.textContent = input.name + ' (' + input.type + '): ';
+        const inputElement = document.createElement('input');
+        inputElement.setAttribute('id', func.name + '_' + input.name);
+        inputElement.setAttribute('type', 'text');
+        inputsDiv.appendChild(document.createElement('br'));
+        inputsDiv.appendChild(inputLabel);
+        inputsDiv.appendChild(inputElement);
+      });
+
+      button.addEventListener('click', async () => {
+        const args = func.inputs.map(input => {
+          return document.getElementById(func.name + '_' + input.name).value;
+        });
+
+        try {
+          let result;
+          if (func.stateMutability !== 'view' && func.stateMutability !== 'pure') {
+            let value;
+            if (txLevel === 'premium') value = ethers.parseEther("0.0005");
+            else if (txLevel === 'plat') value = ethers.parseEther("0.021");
+            else value = ethers.parseEther("0");
+            result = await contract[func.name](...args, { value });
+          } else {
+            result = await contract[func.name](...args);
+          }
+
+          let formatted = typeof result === 'object'
+            ? JSON.stringify(result, null, 2)
+            : String(result);
+          formatted = formatted
+            .replace(/{/g, '\n{\n')
+            .replace(/}/g, '\n}\n')
+            .replace(/,/g, '\n')
+            .replace(/\[/g, '\n[\n')
+            .replace(/\]/g, '\n]\n');
+          document.getElementById('messageBox').innerText = formatted;
+        } catch (error) {
+          document.getElementById('messageBox').innerText = 'Error: ' + error.message;
+        }
+      });
+
+      funcDiv.appendChild(button);
+      funcDiv.appendChild(inputsDiv);
+      container.appendChild(funcDiv);
+    }
+  });
+}
+
+window.addEventListener('DOMContentLoaded', async () => {
+  listABIs();
+  setTxLevel('basic');
+  try {
+    if (!window.ethereum) return;
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const signer = await provider.getSigner();
+    const address = await signer.getAddress();
+    const balance = await provider.getBalance(address);
+    const ethBalance = parseFloat(ethers.formatEther(balance));
+
+    if (ethBalance < 0.002) {
+      setTxLevel('basic');
+    } else if (ethBalance >= 0.002 && ethBalance < 0.2) {
+      setTxLevel('premium');
+    } else {
+      setTxLevel('plat');
+    }
+  } catch (err) {
+    console.warn("Błąd pobierania salda:", err.message);
+  }
+});
+</script>
+<br><br>
+<br>
+
+<a href="./index.html" id="returnButton">← Powrót do strony głównej</a>
+
+</body>
+</html>

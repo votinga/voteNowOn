@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Check Profile X – Dynamiczny</title>
+  <link rel="stylesheet" href="console-style.css" />
+</head>
+<body>
+<div id="messageBox">Ready...</div>
+
+<button onclick="toggleMode()">Przełącz tryb konsoli (dynamiczny/klasyczny)</button>
+
+<h1>Viewing data of Profile at address</h1>
+<select id="abiSelector"></select>
+<button onclick="loadSelectedContract()">Click to activate viewer</button>
+<div id="contractFunctions"></div>
+
+<audio id="typeSound" src="typewriter_slowed.mp3" preload="auto"></audio>
+
+<script src="./ethers.umd.js"></script>
+<script>
+let retroMode = false;
+
+function toggleMode() {
+  retroMode = !retroMode;
+  document.getElementById("messageBox").classList.toggle("retro", retroMode);
+}
+
+function displayMessage(text) {
+  if (!retroMode) {
+    document.getElementById('messageBox').innerText = text;
+  } else {
+    typeWriterEffect(text, "messageBox", 35);
+  }
+}
+
+function typeWriterEffect(text, targetId, delay = 35) {
+  const target = document.getElementById(targetId);
+  const audio = document.getElementById("typeSound");
+  target.innerHTML = '';
+  let i = 0;
+
+  function typeChar() {
+    if (i < text.length) {
+      target.innerHTML += text[i] === '\n' ? '<br>' : text[i];
+      if (text[i] !== ' ' && text[i] !== '\n') {
+        audio.currentTime = 0;
+        audio.play().catch(() => {});
+      }
+      i++;
+      setTimeout(typeChar, delay);
+    }
+  }
+
+  typeChar();
+}
+
+const abiFolderPath = './2profileViewer/';
+
+async function listABIs() {
+  const files = [
+    '0x98f75BA36b83adCd1ad0827f9433a3c0779DFF7D.OptimismNetwork.podgladProfilu.abi'
+  ];
+  const selector = document.getElementById('abiSelector');
+  files.forEach(file => {
+    const option = document.createElement('option');
+    option.value = file;
+    option.innerText = file.split('.abi')[0];
+    selector.appendChild(option);
+  });
+}
+
+async function loadSelectedContract() {
+  const selector = document.getElementById('abiSelector');
+  const abiFile = selector.value;
+  const contractAddress = abiFile.split('.')[0];
+  const contractABI = await fetch(abiFolderPath + abiFile).then(response => response.json());
+  loadContractFunctions(contractAddress, contractABI);
+}
+
+async function loadContractFunctions(contractAddress, contractABI) {
+  const provider = new ethers.BrowserProvider(window.ethereum);
+  const signer = await provider.getSigner();
+  const contract = new ethers.Contract(contractAddress, contractABI, signer);
+
+  const container = document.getElementById('contractFunctions');
+  container.innerHTML = '';
+  contractABI.forEach(func => {
+    if (func.type === "function") {
+      const funcDiv = document.createElement('div');
+      funcDiv.className = func.stateMutability;
+
+      const button = document.createElement('button');
+      button.textContent = func.name;
+      button.className = func.stateMutability;
+
+      const inputsDiv = document.createElement('div');
+      func.inputs.forEach(input => {
+        const inputLabel = document.createElement('label');
+        inputLabel.textContent = input.name + ' (' + input.type + '): ';
+        const inputElement = document.createElement('input');
+        inputElement.setAttribute('id', func.name + '_' + input.name);
+        inputElement.setAttribute('type', 'text');
+        inputsDiv.appendChild(inputLabel);
+        inputsDiv.appendChild(inputElement);
+      });
+
+      button.addEventListener('click', async () => {
+        const args = func.inputs.map(input => {
+          return document.getElementById(func.name + '_' + input.name).value;
+        });
+        try {
+          const result = await contract[func.name](...args);
+          let formatted = typeof result === 'object'
+            ? JSON.stringify(result, null, 2)
+            : String(result);
+          formatted = formatted
+            .replace(/{/g, '\n{\n')
+            .replace(/}/g, '\n}\n')
+            .replace(/,/g, '\n')
+            .replace(/\[/g, '\n[\n')
+            .replace(/\]/g, '\n]\n');
+          displayMessage(formatted);
+        } catch (error) {
+          displayMessage('Error: ' + error.message);
+        }
+      });
+
+      funcDiv.appendChild(button);
+      funcDiv.appendChild(inputsDiv);
+      container.appendChild(funcDiv);
+    }
+  });
+}
+
+window.addEventListener('DOMContentLoaded', listABIs);
+</script>
+</body>
+</html>

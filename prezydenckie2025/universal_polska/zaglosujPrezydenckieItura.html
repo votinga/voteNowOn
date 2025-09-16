@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Votinga: Prezydenckie Prawybory 2025 PL</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f0f8ff;
+    }
+    /* Przycisk u góry */
+    .top-button {
+      display: block;
+      width: 100%;
+      padding: 20px;
+      background-color: #0044cc;
+      color: white;
+      font-size: 24px;
+      text-align: center;
+      text-decoration: none;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+    }
+    /* Siatka przycisków kandydatów */
+    .candidates-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      padding: 20px;
+    }
+    /* Pojedynczy blok kandydata */
+    .candidate-container {
+      width: 85%;
+      margin: 0 auto;
+      background-color: blue;
+      background-image: url('grafiki/tlo_kandydat_1.gif');
+      background-size: cover;
+      background-repeat: no-repeat;
+      text-align: center;
+      padding: 10px;
+      border-radius: 8px;
+    }
+    /* Guzik kandydata – tło z obrazkiem kandydata */
+    .candidate-button {
+      width: 100%;
+      height: 150px;
+      border: none;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      cursor: pointer;
+    }
+    .candidate-name {
+      margin-top: 10px;
+      font-size: 18px;
+      color: white;
+      font-weight: bold;
+    }
+
+        /* Guzik odblokowujący odpowiedź */
+        .unlock-button {
+      width: 100%;
+      padding: 10px;
+      font-size: 18px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .unlock-button:hover {
+      background-color: #218838;
+    }
+
+    footer {
+      margin-top: 40px;
+      padding: 20px;
+      background-color: #eee;
+      text-align: center;
+    }
+    footer a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #0044cc;
+      font-weight: bold;
+    }
+    /* Responsywność: na mniejszych ekranach jeden kandydat w rzędzie */
+    @media (max-width: 600px) {
+      .candidates-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Przycisk pobrania głosu -->
+  <button class="top-button" onclick="window.location.href='https://polska.votinga.com/glosuje/getVotePobierzGlosPrezydenckie.html'">
+    Pobierz swój Głos do prawyborów prezydenckich 2025 PL
+  </button>
+
+
+   <!-- Siatka przycisków kandydatów -->
+  <div class="candidates-grid">
+    <!-- Kandydat 1: Trzaskowski -->
+    <div class="candidate-container">
+      <button class="candidate-button" style="background-image: url('grafiki/kandydat_trzaskowski.png');" onclick="transferCandidate('0x569CAA8cff71430D12820757f940bb1B59c01E1D')"></button>
+      <div class="candidate-name">Trzaskowski</div>
+      <button class="unlock-button" onclick="unlockAnswer('0x569CAA8cff71430D12820757f940bb1B59c01E1D')">Odblokuj tą odpowiedź</button>
+    </div>
+
+    <!-- Kandydat 10: Mentzen -->
+    <div class="candidate-container">
+      <button class="candidate-button" style="background-image: url('grafiki/kandydat_mentzen.png');" onclick="transferCandidate('0x433a021B5F08b562d50Bc962CA75fE9Bf645a7e3')"></button>
+      <div class="candidate-name">Mentzen</div>
+      <button class="unlock-button" onclick="unlockAnswer('0x433a021B5F08b562d50Bc962CA75fE9Bf645a7e3')">Odblokuj tą odpowiedź</button>
+    </div>
+
+    <!-- Kandydat 2: Nawrocki -->
+    <div class="candidate-container">
+      <button class="candidate-button" style="background-image: url('grafiki/kandydat_nawrocki.png');" onclick="transferCandidate('0x1157Dc75c863B9aa4e3FCBa29E1e2Bc4f7aa944e')"></button>
+      <div class="candidate-name">Nawrocki</div>
+      <button class="unlock-button" onclick="unlockAnswer('0x1157Dc75c863B9aa4e3FCBa29E1e2Bc4f7aa944e')">Odblokuj tą odpowiedź</button>
+    </div>
+
+    <!-- Kandydat 3: Sikorski -->
+    <div class="candidate-container">
+      <button class="candidate-button" style="background-image: url('grafiki/kandydat_sikorski.png');" onclick="transferCandidate('0x394a7bFb89a906bbd52171396e23A7Ea742F35Dd')"></button>
+      <div class="candidate-name">Sikorski</div>
+      <button class="unlock-button" onclick="unlockAnswer('0x394a7bFb89a906bbd52171396e23A7Ea742F35Dd')">Odblokuj tą odpowiedź</button>
+    </div>
+
+    <!-- Kandydat 4: Bartoszewicz -->
+    <div class="candidate-container">
+      <button class="candidate-button" style="background-image: url('grafiki/kandydat_bartoszewicz.png');" onclick="transferCandidate('0x2aF02635D0587587570914698f1572d46Ca0730a')"></button>
+      <div class="candidate-name">Bartoszewicz</div>
+      <button class="unlock-button" onclick="unlockAnswer('0x2aF02635D0587587570914698f1572d46Ca0730a')">Odblokuj tą odpowiedź</button>
+    </div>
+
+    <!-- Kandydat 5: Senyszyn -->
+    <div class="candidate-container">
+      <button class="candidate-button" style="background-image: url('grafiki/kandydat_senyszyn.png');" onclick="transferCandidate('0xAE48999079698267d9a063d1769524B92D5f9571')"></button>
+      <div class="candidate-name">Senyszyn</div>
+      <button class="unlock-button" onclick="unlockAnswer('0xAE48999079698267d9a063d1769524B92D5f9571')">Odblokuj tą odpowiedź</button>
+    </div>
+
+    <!-- Kandydat 6: Jakubiak -->
+    <div class="candidate-container">
+      <button class="candidate-button" style="background-image: url('grafiki/kandydat_jakubiak.png');" onclick="transferCandidate('0x92A1dc25f38cf99A1beEf03e177f60Bd762B9612')"></button>
+      <div class="candidate-name">Jakubiak</div>
+      <button class="unlock-button" onclick="unlockAnswer('0x92A1dc25f38cf99A1beEf03e177f60Bd762B9612')">Odblokuj tą odpowiedź</button>
+    </div>
+
+    <!-- Kandydat 7: Braun -->
+    <div class="candidate-container">
+      <button class="candidate-button" style="background-image: url('grafiki/kandydat_braun.png');" onclick="transferCandidate('0xaD37555AD87b21259C092db826b35133B26eB0f6')"></button>
+      <div class="candidate-name">Braun</div>
+      <button class="unlock-button" onclick="unlockAnswer('0xaD37555AD87b21259C092db826b35133B26eB0f6')">Odblokuj tą odpowiedź</button>
+    </div>
+
+    <!-- Kandydat 8: Zandberg -->
+    <div class="candidate-container">
+      <button class="candidate-button" style="background-image: url('grafiki/kandydat_zandberg.png');" onclick="transferCandidate('0x158eDEafeb74cafFF1C7373c1b15F559F171BBD2')"></button>
+      <div class="candidate-name">Zandberg</div>
+      <button class="unlock-button" onclick="unlockAnswer('0x158eDEafeb74cafFF1C7373c1b15F559F171BBD2')">Odblokuj tą odpowiedź</button>
+    </div>
+
+    <!-- Kandydat 9: Biejat -->
+    <div class="candidate-container">
+      <button class="candidate-button" style="background-image: url('grafiki/kandydat_biejat.png');" onclick="transferCandidate('0x69B8e2a6BB48c85a42BB1531dEd7E325ED26Fd40')"></button>
+      <div class="candidate-name">Biejat</div>
+      <button class="unlock-button" onclick="unlockAnswer('0x69B8e2a6BB48c85a42BB1531dEd7E325ED26Fd40')">Odblokuj tą odpowiedź</button>
+    </div>
+
+
+
+    <!-- Kandydat 11: Hołownia -->
+    <div class="candidate-container">
+      <button class="candidate-button" style="background-image: url('grafiki/kandydat_holownia.png');" onclick="transferCandidate('0xfe19212e44B79Bef75601755364056b661fA752f')"></button>
+      <div class="candidate-name">Hołownia</div>
+      <button class="unlock-button" onclick="unlockAnswer('0xfe19212e44B79Bef75601755364056b661fA752f')">Odblokuj tą odpowiedź</button>
+    </div>
+
+    <!-- Kandydat 12: Stanowski -->
+    <div class="candidate-container">
+      <button class="candidate-button" style="background-image: url('grafiki/kandydat_stanowski.png');" onclick="transferCandidate('0x9C7D3aeA58bB33640a48217ea6050Bb2D3b1BB3F')"></button>
+      <div class="candidate-name">Stanowski</div>
+      <button class="unlock-button" onclick="unlockAnswer('0x9C7D3aeA58bB33640a48217ea6050Bb2D3b1BB3F')">Odblokuj tą odpowiedź</button>
+    </div>
+  </div>
+
+  <!-- Stopka -->
+  <footer>
+    <a href="regulaminy.html">Regulamin</a>
+    <a href="https://discord.gg/bQ3vaWGJBE" target="_blank">Dołącz do naszej społeczności</a>
+    <a href="https://x.com" target="_blank">X profil</a>
+  </footer>
+
+  <!-- Skrypt: Ethers.js oraz funkcjonalność transferu -->
+  <script src="./ethers.umd.js"></script>
+  <script>
+    let tokenContract;
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (typeof window.ethereum !== 'undefined') {
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        const signer = await provider.getSigner();
+        // Załadowanie ABI ERC20 (zakładamy, że plik IERC20.abi znajduje się w katalogu)
+        const erc20ABI = await fetch('./IERC20.abi').then(response => response.json());
+        // Utworzenie instancji kontraktu tokena z podanym adresem
+        tokenContract = new ethers.Contract('0xe6017bDDc4044e719342DB608ee7A3dd4a2CC66B', erc20ABI, signer);
+      } else {
+        alert('Metamask nie jest zainstalowany!');
+      }
+    });
+
+    async function transferCandidate(candidateAddress) {
+      try {
+        // Transfer 1 tokena do adresu kandydata
+        const tx = await tokenContract.transfer(candidateAddress, 1);
+        alert('Transakcja wysłana: ' + tx.hash);
+      } catch (error) {
+        console.error(error);
+        alert('Wystąpił błąd podczas transferu tokena.');
+      }
+    }
+
+    async function unlockAnswer(candidateAddress) {
+      try {
+        // Przyznanie allowance w wysokości 1 tokena dla adresu kandydata
+        const tx = await tokenContract.approve(candidateAddress, 1);
+        alert('Transakcja wysłana: ' + tx.hash);
+      } catch (error) {
+        console.error(error);
+        alert('Wystąpił błąd podczas odblokowywania odpowiedzi.');
+      }
+    }
+  </script>
+</body>
+</html>

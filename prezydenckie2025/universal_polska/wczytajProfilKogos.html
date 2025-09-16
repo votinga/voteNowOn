@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wczytaj Profil</title>
+    <style>
+         body {
+    /* Ustawienie tła z obrazkiem */
+    background-image: url('grafiki/stworzProfil.png');
+    background-size: cover; /* Rozciągnięcie tła na całą szerokość i wysokość */
+    background-repeat: no-repeat;
+    background-position: center center;
+
+    /* Dodanie przezroczystości i białego tła */
+    background-color: rgba(255, 255, 255, 0.8); /* Białe tło z przezroczystością 80% */
+    color: rgba(0, 0, 51, 1); /* Ciemnogranatowa czcionka */
+
+    font-family: Arial, sans-serif; /* Ustawienie czcionki */
+}
+
+h2, h1, button, label, .text-container {
+    background-color: rgba(255, 255, 255, 0.5); /* Białe tło tekstu z przezroczystością 50% */
+    padding: 20px; /* Dodanie odstępu wewnętrznego */
+    margin: 10px; /* Dodanie marginesu */
+    color:rgb(16, 49, 139);
+    font-weight: 550;
+}
+
+h2 , h1 {
+    margin:50px;
+    padding:10px;
+}
+
+button {
+    font-weight: 800;
+}
+/* Style dodatkowe dla lepszej prezentacji i czytelności */
+h1, p {
+    margin: 0 0 10px; /* Margines dolny dla elementów h1 i p */
+}
+a{
+    text-decoration: wavy;
+    color:yellow;
+}
+#createButton{
+    color:blueviolet;
+}       
+input{
+    width: 36%;
+    
+    display: inline-block; /* Zmienia display na inline-block */
+}
+
+#profileInfo{
+background-color:white;
+}
+    </style>
+</head>
+<body>
+
+    <h2>UniqueID Encryption</h2>
+    <form id="encryptionForm">
+        <label for="pesel">UniqueID (Your PESEL): do porównania z wczytanym Pamiętaj dodać D1 D2 jeśli to konto reaktywowane</label>
+        <input type="text" id="pesel" name="pesel">
+        <button type="button" onclick="encrypt()">Encrypt</button><br><br>
+
+        <label for="encryptedUniqueId">Encrypted UniqueID:</label>
+        <input type="text" id="encryptedUniqueId" name="encryptedUniqueId" readonly>
+    </form>
+    
+    <h1>Create Profile</h1>
+    <form id="profileForm">
+        <label for="uniqueId">Unique ID:</label>
+        <input type="text" id="uniqueId" name="uniqueId"><br><br>
+
+        <label for="organization1">Organization 1:</label>
+        <input type="text" id="organization1" name="organization1"><br><br>
+
+        <label for="organization2">Organization 2:</label>
+        <input type="text" id="organization2" name="organization2"><br><br>
+
+        <label for="organization3">Organization 3:</label>
+        <input type="text" id="organization3" name="organization3"><br><br>
+
+        <label for="visibleName">Visible Name:</label>
+        <input type="text" id="visibleName" name="visibleName"><br><br>
+
+        <label for="visibleSirname">Visible Surname:</label>
+        <input type="text" id="visibleSirname" name="visibleSirname"><br><br>
+
+        <label for="visibleInfo">Visible Info:</label>
+        <input type="text" id="visibleInfo" name="visibleInfo"><br><br>
+
+        <button type="button" onclick="wczytajProfil()">Wczytaj Profile</button>
+    </form>
+    <button type="button" ><a href="./">Strona Główna</a></button>
+    <h1>Profil Uzytkownika / User Profile</h1>
+    <div id="profileInfo"></div>
+
+ 
+<!-- Import MetaMask SDK -->
+<script src="./node_modules/@metamask/sdk/dist/browser/iife/metamask-sdk.js"></script>
+
+<!-- Import ethers.js (UMD version) -->
+<script src="./ethers.umd.js"></script>
+
+    <script>
+
+        // Connect to the Ethereum network through MetaMask
+        async function connectToEthereum() {
+            if (window.ethereum) {
+                try {
+                    await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    window.provider = new ethers.BrowserProvider(window.ethereum);
+                    window.signer = window.provider.getSigner();
+                    window.factoryOfProfilesAddress = '0xa029c1c1710fc74dbeb125ce02c9a3469ca8079f'; // Address of the FactoryOfProfiles contract
+                    const response2 = await fetch('./factoryOfProfiles.abi');
+                    window.factoryOfProfilesABI = await response2.json(); /* Load the ABI from the file factoryOfProfiles.abi */;
+                    const responseAbiProfilu = await fetch('./profile.abi');
+                    window.profileABI = await responseAbiProfilu.json();
+
+                    console.log("Provider:", window.provider );
+                    console.log("Signer:", window.signer);
+
+  
+
+                    // Update UI elements with user's Ethereum address and profile information
+                    updateUI();
+                } catch (error) {
+                    console.error(error);
+                }
+            } else {
+                alert('Please install MetaMask to use this application.');
+            }
+        }
+
+
+        function encrypt() {
+            const peselInput = document.getElementById('pesel').value;
+            const encryptedUniqueId = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(peselInput));
+            document.getElementById('encryptedUniqueId').value = encryptedUniqueId;
+
+            // Set the UniqueID field in the profileForm to the encrypted value
+            document.getElementById('uniqueId').value = encryptedUniqueId;
+        }
+
+
+        async function wczytajProfil() {
+            try {
+                const contract = new ethers.Contract(factoryOfProfilesAddress, factoryOfProfilesABI, signer);
+          
+                const uniqueId = document.getElementById('uniqueId').value;
+                let organization1 = document.getElementById('organization1').value;
+                let organization2 = document.getElementById('organization2').value;
+                let organization3 = document.getElementById('organization3').value;
+                let visibleName = document.getElementById('visibleName').value;
+                let visibleSirname = document.getElementById('visibleSirname').value;
+                let visibleInfo = document.getElementById('visibleInfo').value;
+                // wczytanie profilu
+                const accounts = await provider.listAccounts();
+              // to jak samego siebie  const userAddress = accounts[0];
+				const userAddress = await contract.adresyPersonPoUniqueId(uniqueId);
+                const tx = await contract.rejestrAdminowProfili(userAddress);
+           
+                //createProfile(uniqueId, organization1, organization2, organization3, visibleName, visibleSirname, visibleInfo);
+               
+
+                // Display the address of the created profile
+                alert(`Profile created successfully!\nProfile address: ${tx.toString()}`);
+                const contractProfilu = new ethers.Contract(tx, profileABI, signer);
+                   
+                const tx2 = await contractProfilu.UniqueId();
+                 console.log("1", tx2);
+                 console.log("2", tx2.toString());
+                 
+                alert(`twoje UniqueId ${tx2}`);
+
+                // Update UI elements with user's Ethereum address and profile information
+                updateUI();
+                organization1 = await contractProfilu.organization1();
+                organization2 = await contractProfilu.organization2();
+                organization3 = await contractProfilu.organization3();
+                visibleName = await contractProfilu.VisibleName();
+                visibleSirname = await contractProfilu.VisibleSirname();
+                visibleInfo = await contractProfilu.VisibleInfo();
+
+        // Display profile data on the page
+        const profileInfoElement = document.getElementById('profileInfo');
+        profileInfoElement.innerHTML = `
+            <h2>Your Profile</h2>
+            <p>Unique ID: ${tx2}</p>
+            <p>Organization 1: ${organization1}</p>
+            <p>Organization 2: ${organization2}</p>
+            <p>Organization 3: ${organization3}</p>
+            <p>Visible Name: ${visibleName}</p>
+            <p>Visible Surname: ${visibleSirname}</p>
+            <p>Visible Info: ${visibleInfo}</p>
+			<p>Contract: ${contractProfilu.address}</p>
+			<p>Persona Admin adress: ${userAddress}</p>
+        `;
+            } catch (error) {
+                console.error(error);
+                alert('An error occurred while creating the profile. Please try again.');
+            }
+        }
+
+        async function updateUI() {
+            try {
+                const factoryContract = new ethers.Contract(factoryOfProfilesAddress, factoryOfProfilesABI, provider);
+
+                // Get the user's Ethereum address from MetaMask
+                const accounts = await provider.listAccounts();
+                const userAddress = accounts[0];
+
+                // Get the address and index of the user's profile
+                const profileAddress = await factoryContract.rejestrAdminowProfili(userAddress);
+                const profileIndex = await factoryContract.totalProfiles();
+                const profileIndexFromAddress = await factoryContract.rejestrProfili(profileAddress);
+
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        window.onload = function() {
+            connectToEthereum();
+        };
+    </script>
+</body>
+</html>

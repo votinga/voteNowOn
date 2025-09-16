@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Votinga Protocol - Decentralized confirmation of IDs and residency </title>
+    <style>
+        body {
+            font-size: 24px;
+            background-color: #ffffff;
+            color: #000000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            max-width: 400px;
+            margin: 10px auto;
+            padding: 10px;
+            background-color: #d2691e; /* ciemny pomarańcz */
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 24px;
+        }
+
+        button:hover {
+            background-color: #8b4513; /* ciemny brąz */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button onclick="goTo('5getVoteStatesAndDistricts/getVoteIllinois.html')">get Vote as Illinois Resident</button>
+		<button onclick="goTo('5getVoteStatesAndDistricts/getVoteInStatesAndDistricts.html')">get Vote as USA Resident</button>
+
+
+
+        <button onclick="goTo('index.html')">Home</button>
+    </div>
+    <script>
+        function goTo(page) {
+            const currentPath = window.location.pathname;
+            const directory = currentPath.substring(0, currentPath.lastIndexOf('/'));
+            window.location.href = directory + '/' + page;
+        }
+    </script>
+</body>
+</html>

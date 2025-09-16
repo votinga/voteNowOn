@@ -1,0 +1,283 @@
+[
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint64",
+				"name": "version",
+				"type": "uint64"
+			}
+		],
+		"name": "Initialized",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "profileAddress",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "profileIndex",
+				"type": "uint256"
+			}
+		],
+		"name": "ProfileCreated",
+		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			}
+		],
+		"name": "checkProfile",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "isAcceptable",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "uniqueId",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "organization1",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "organization2",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "organization3",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "visibleName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "visibleSurname",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "visibleInfo",
+				"type": "string"
+			}
+		],
+		"name": "createProfile",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "uniqueId",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "organization1",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "organization2",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "organization3",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "visibleName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "visibleSurname",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "visibleInfo",
+				"type": "string"
+			}
+		],
+		"name": "createProfileUpgradeable",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "deployedProfiles",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "accountToCheck",
+				"type": "address"
+			}
+		],
+		"name": "doesProfileExist",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "exists",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "accountToCheck",
+				"type": "address"
+			}
+		],
+		"name": "getProfileUniqueIdFromAddress",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_accessLevels",
+				"type": "address"
+			}
+		],
+		"name": "initialize",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			}
+		],
+		"name": "isProfileVerified",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "isAcceptable",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "profileAddress",
+				"type": "address"
+			}
+		],
+		"name": "viewProfileData",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "profileData",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+		{
+		"inputs": [],
+		"name": "isThatProxy",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+]

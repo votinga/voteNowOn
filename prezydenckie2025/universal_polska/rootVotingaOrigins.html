@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Votinga PL Korzenie Organizacji Podgląd i Operacje</title>
+<style>
+    .button-container {
+        margin-top: 20px;
+    }
+    button {
+        margin-right: 10px;
+        padding: 10px;
+    }
+    .view {
+        border: 4px solid blue;
+    }
+    .nonpayable {
+        border: 4px solid orange;
+    }
+    .payable {
+        border: 4px solid gold;
+    }
+    #messageBox {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 50px;
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #dee2e6;
+        padding: 10px;
+        box-sizing: border-box;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    select {
+        width: 300px;
+    }
+    body{
+        font-size:28px;
+    }
+</style>
+</head>
+<body>
+<div id="messageBox">Witamy w Votinga PL Origins</div>
+<br>
+<br>
+<br>
+
+<h1>Organization in protocol: USA Origins</h1>
+<select id="abiSelector"></select>
+<button onclick="loadSelectedContract()">Click to show available functions</button>
+<div id="contractFunctions"></div>
+Votinga:
+<br>
+Exploratory bloków przykładowe dla sieci <b>Optimistic</b> <br>
+ tu możesz sprawdzić transakcje wychodzace z twego portfela, potwierdzenia i rzeczywistą kreację profilu na blockchainie.
+<br>
+ Podgląd zawartości profilu znajdziesz w opcji menu podlgąd profilu.
+<br><br>
+
+<a href="https://optimistic.etherscan.io//">Optimistic etherscan</a><br>
+<br>
+<a href="https://optimism.blockscout.com/">Optimistic block scout </a><br>
+<br>
+<br>
+<br>
+<button onclick="window.location.href='https://polska.votinga.com/prezydenckie2025/prezydenci.html'">Powrót</button>     
+
+<script src="./ethers.umd.js"></script>
+<script>
+    const abiFolderPath = './8rootABI/';
+
+    async function listABIs() {
+        // Simulated API call to list files, replace with your own backend or static list
+        const files = ['0x6a4929a6f5fb43e77653e82e6116d4fbdd1473a7.VotingaPolishOrigins.abi',]; // Example static list
+        const selector = document.getElementById('abiSelector');
+        files.forEach(file => {
+            const option = document.createElement('option');
+            option.value = file;
+            option.innerText = file.split('.')[0]; // Remove '.abi' for display
+            selector.appendChild(option);
+        });
+    }
+
+    async function loadSelectedContract() {
+        const selector = document.getElementById('abiSelector');
+        const abiFile = selector.value;
+        const contractAddress = abiFile.split('.')[0]; // Assumes ABI filename is the address
+        const contractABI = await fetch(abiFolderPath + abiFile).then(response => response.json());
+        loadContractFunctions(contractAddress, contractABI);
+    }
+
+    async function loadContractFunctions(contractAddress, contractABI) {
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        const signer = await provider.getSigner();
+        const contract = new ethers.Contract(contractAddress, contractABI, signer);
+
+        const container = document.getElementById('contractFunctions');
+        container.innerHTML = '';
+        contractABI.forEach(func => {
+            if (func.type === "function") {
+                const funcDiv = document.createElement('div');
+                funcDiv.className = func.stateMutability;
+
+                const button = document.createElement('button');
+                button.textContent = func.name;
+                button.className = func.stateMutability === 'view' || func.stateMutability === 'pure' ? 'view' :
+                                    func.stateMutability === 'payable' ? 'payable' : 'nonpayable';
+
+                const inputsDiv = document.createElement('div');
+                func.inputs.forEach(input => {
+                    const inputLabel = document.createElement('label');
+                    inputLabel.textContent = input.name + ' (' + input.type + '): ';
+                    const inputElement = document.createElement('input');
+                    inputElement.setAttribute('id', func.name + '_' + input.name);
+                    inputElement.setAttribute('type', 'text');
+                    inputsDiv.appendChild(inputLabel);
+                    inputsDiv.appendChild(inputElement);
+                });
+
+                button.addEventListener('click', async () => {
+                    const args = func.inputs.map(input => {
+                        const inputValue = document.getElementById(func.name + '_' + input.name).value;
+                        return inputValue;
+                    });
+                    try {
+                        const result = await contract[func.name](...args);
+                        console.log(result);
+                        document.getElementById('messageBox').innerText = `Function executed. Result: ${JSON.stringify(result)}`;
+                    } catch (error) {
+                        console.error(error);
+                        document.getElementById('messageBox').innerText = 'Error: ' + error.message;
+                    }
+                });
+
+                funcDiv.appendChild(button);
+                funcDiv.appendChild(inputsDiv);
+                container.appendChild(funcDiv);
+            }
+        });
+    }
+
+    window.addEventListener('DOMContentLoaded', (event) => {
+        listABIs();
+    });
+</script>
+
+
+</body>
+</html>

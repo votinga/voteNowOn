@@ -1,0 +1,343 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1250">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice 4.1.13  (Win32)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="0;0">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 21cm 29.7cm; margin: 2.54cm }
+		P { margin-bottom: 0.21cm }
+		A:link { color: #000080; so-language: zxx; text-decoration: underline }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="pl-PL" LINK="#000080" VLINK="#800000" DIR="LTR">
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">Votinga
+&ndash; Instrukcje i FAQ</P>
+<p> Jak stworzyć swój UniqueID - identyfikator używany w systemie. Bazuje on na twoim peselu i wentualnej liczbie duplikatów profilu, które stworzono.
+	Tylko z 1 profilu da się głosować. Duplikat nie może głosować.
+	Wszystkie profile i te oznaczone i nieoznaczone jako duplikat mają 1 głos na 1 Unique ID.
+	Czyli jeśli ktoś będzie miał zweryfikowany profil zagłosuje i potem zgłosi się, że zgubił klucze,
+	stworzy kolejny profil już z końcówką D1, to nie będzie mógł zagłosować.<br>
+	
+	Jest on Encrypted / Zaszyfrowany UniqueID funkcją 1 kierunkową.
+	Pamiętaj zamienić końcowe znaki na D1 D2 ... DN jeśli to konto reaktywowane po utracie kluczy itp: 
+
+Czyli jeśli po encypcji PESELU masz hash 0x0000abcd .... 0102cdA to jeśli to duplikat
+bo zgubiłeś/aś klucze to na końcu 0x0000abcd......0102cD1 robisz zamieniasz tu dA na D1
+jeśli zgubisz 100 razy klucz to duplikat wtedy ma końcówkę D100 i zamieniasz ostatnie 4 znaki
+zasadniczo teraz pierwsza walidacja jest darmowa z pewnymi wyjątkami, ale walidacje duplikatów prawie zawsze będą odpłatne.
+Pozdrawiamy.
+
+Pamiętaj o weryfikacji profilu u walidatora. Pamiętaj o nadaniu profilowi obywatelstwa PL, jeśli takie posiadasz walidator potwierdzi. Walidatorów znajdziesz na forum Discord i lokalnych spotkaniach. Votinga:
+Exploratory bloków przykładowe dla sieci Optimistic
+tu możesz sprawdzić transakcje wychodzace z twego portfela, potwierdzenia i rzeczywistą kreację profilu na blockchainie.
+Podgląd zawartości profilu znajdziesz w opcji menu podlgąd profilu.
+Optimistic etherscan</p>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">0.
+How to get ether for polygon or ethereum or polkaDot zkEVM or other
+chain</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">Buy
+it,or mine it if possible.</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">Note
+this is live chain system, so you need to pay/or mine to 3<SUP>rd</SUP>
+party to use this freeware software.</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">IT
+not open source but for free. For free is use of smart contracts, you
+pay for ether which is using blockchain as your personal database but
+in public space.</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">Note
+SSN will be encrypted by keccack256 function or in plain if you put
+it that way on blockcahin.</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">There
+is many ways how you can aquaire ether or MATIC used by polygon chain
+&ndash; on which are initial smart contracts and start of this
+project.</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">Notice
+that you can by many online tools store your data into the
+blockchain, this is just a freeware in form of smart contract where
+you store and transforma yourseelf by your actions your data.</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">Admins
+can transform state of smart contracts to change behaviour of those
+smart contracts to act differently to the data which you stored.</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">But
+we will not transform your data putten on public database which is
+blockchain.</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">So
+if it is fragile data or something which you don't want to share in
+public encrypt it.</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%"><BR><BR>
+</P>
+<OL>
+	<LI><P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">
+	Getting started &ndash; getting own keys / wallets</P>
+</OL>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%"><BR><BR>
+</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">you
+can use metamask</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%"><A HREF="https://metamask.io/"><FONT COLOR="#1155cc"><U>https://metamask.io/</U></FONT></A></P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">or
+for mobile</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%"><A HREF="https://support.metamask.io/getting-started/how-to-use-the-metamask-mobile-browser/"><FONT COLOR="#1155cc"><U>https://support.metamask.io/getting-started/how-to-use-the-metamask-mobile-browser/</U></FONT></A></P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%"><FONT COLOR="#1155cc"><U><BR></U></FONT><BR>
+</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">also
+you can generate wallet and words on computer and print them as so
+called cold wallet.</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%"><A HREF="https://getcoinplate.com/bip39-seed-phrase-mnemonics-generator-offline-online-tool/?v=c86ee0d9d7ed"><FONT COLOR="#1155cc"><U>https://getcoinplate.com/bip39-seed-phrase-mnemonics-generator-offline-online-tool/?v=c86ee0d9d7ed</U></FONT></A></P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">you
+can use it offline after dowloading website</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">use
+bip 44</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">use
+for keys type Ethereum not Bitcoin.</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%"><IMG SRC="votingaFAQ_html_2c30503d.png" ALIGN=BOTTOM WIDTH=602 HEIGHT=381 BORDER=0></P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%"><BR><BR>
+</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">Use
+then 1 key to control / create and manage your profile.</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">Note
+that 1 key can create only 1 profile in organization, in this case
+organization is United States of America.</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">Click
+generate and write down those words, best if you also save initial
+data like place in tree and whole page generated.</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">Words
+are most important .</P>
+<P STYLE="text-indent: 1.27cm; margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">
+<BR>
+</P>
+<P STYLE="text-indent: 1.27cm; margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">
+2. Register</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">Before
+you click create profile or CreateUpgradableProfile 
+</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%"><IMG SRC="votingaFAQ_html_568d165d.png" ALIGN=BOTTOM WIDTH=602 HEIGHT=313 BORDER=0></P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">(
+the create profile use static smart contract -&gt; unmutable , the
+upgrade able profile use beacon pointing to current implementation of
+profile set by administration of protocol mutable)</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">Step
+1) Before Creating profile read this instruction below carefully and
+build your UniqueID:</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%"><IMG SRC="votingaFAQ_html_104571ac.png" ALIGN=BOTTOM WIDTH=348 HEIGHT=145 BORDER=0></P>
+<P STYLE="margin-bottom: 0cm">Original profile should have unique ID</P>
+<P STYLE="margin-bottom: 0cm">in our concept of initial anonimization
+of profiles fragile data.</P>
+<P STYLE="margin-bottom: 0cm">Unique ID is encrypted with keccack256
+and is fixed length hex number</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">How to build unique ID</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">Type in input field nex to encrypt
+button data as follow:</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">Type
+inside &ldquo;USA&rdquo; + State Code -see table below + your Social
+Security Number + YYYYMMDD - where YYYY is your year of birth, MM is
+your month of birth and DD is your day of birth. example
+USAILLNNNNNNN20001201 type similar thing just in, 
+</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">NNN&hellip;NN
+length might vary might contain letters and remember that smal a or
+capital A letters give different encrypted hash code.</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">State
+codes to be used:</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%"><B>Illinois</B>
+- ILL</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">New
+Jersey - NJ</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">New
+York - NY</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">If
+you lost keys and want to recreate profile after you have hash if it
+is duplicate rename last digits and letters with d1,d2,..d20 . This
+might be not broad available process in this first voting.</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">Step
+2) After you have unique ID hash/encrypted type it in form, then type
+other data, there are two forms one for creatingProfile - immutable
+form, and one 
+</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">createUpgradeableProfile
+is mutable code form, where scripts of how profile can be used are
+updated automatically when protocol Votinga is updated.</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">Still
+with old static profile even after upgrade most functionalities will
+be kept, but to migrate to new protocol you will need to recreate and
+validate new profile.</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">click
+create profile and signa message in metamask or other cryptowallet.</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">Step
+3) after creating profile see on blockchain explorer like this:</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%"><A HREF="https://polygonscan.com/"><FONT COLOR="#1155cc"><U>https://polygonscan.com/</U></FONT></A></P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">type
+there your wallet used - public address , do not enter your private
+key. 
+</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">You
+will have transactions, last transaction should have internal
+transactions which create new contract, adres of created contract is
+your profile.</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">Check
+this using Check Profile X in main menu of webapp</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%"><IMG SRC="votingaFAQ_html_89cf557.png" ALIGN=BOTTOM WIDTH=471 HEIGHT=96 BORDER=0></P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">Enter
+the adres of created profile if data there showing that what you
+typed in,</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">please
+move to next step verification of profile ( you will need documents
+which confirm data which you used to create profile ) .</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">Then
+on discord use forum or forms to get in que for verification of
+profile.</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">Note
+that we do not administrate your data.</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">Note
+that person with which you exchange information to get verification
+of profile can make personal , not deletable notes, for purpose of
+investigation of criminal activity or forgery with usage of profiles.</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">There
+is no business or ngo entity as manager of your data.</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">You
+store by yourself some little or more than little data on public
+database in form of blockchain called Polygon or maybe other in
+future.</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%"><BR>
+</P>
+<P STYLE="text-indent: 1.27cm; margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">
+3.  After verification, Please click on proper state to get Vote. 
+</P>
+<P STYLE="text-indent: 1.27cm; margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">
+You will be able to get just 1 vote in state or district.</P>
+<P STYLE="text-indent: 1.27cm; margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">
+You are not suppose to try get more votes. Such attempts even if most
+likely unsuccessful might result in ban for this voting or longer.</P>
+<P STYLE="text-indent: 1.27cm; margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">
+After you get vote you can vote.</P>
+<P STYLE="text-indent: 1.27cm; margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">
+We will activate mixers of vote which make more anonymous voting,
+after at least 10 000 people gather tokens to vote.</P>
+<P STYLE="text-indent: 1.27cm; margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">
+Right now you can vote directly just semi anonymous - as you SSN is
+encrypted by kecckach and must be knwo apropri to identify profile.</P>
+<P STYLE="text-indent: 1.27cm; margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">
+Voting is make by transferring vote token to proper address where
+immutable not proxied contract containing string with option like
+Kamala Harris or Donald Trump.</P>
+<P STYLE="text-indent: 1.27cm; margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">
+This is the way.  
+</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%"><BR><BR>
+</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%"><BR><BR>
+</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%"><BR><BR>
+</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%"><BR><BR>
+</P>
+<P STYLE="text-indent: 1.27cm; margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">
+4. Voting mroe detailed.</P>
+<P STYLE="text-indent: 1.27cm; margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">
+If you know the state click the state you will se the adres.</P>
+<P STYLE="text-indent: 1.27cm; margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">
+Enter the menu for each state then you can click view (blue styled
+button ) to</P>
+<P STYLE="text-indent: 1.27cm; margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">
+see confirmed Token Address which is your vote token.</P>
+<P STYLE="text-indent: 1.27cm; margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">
+Add token with that address in metamask or other wallet like open
+zeppelin defender or my ether wallet ( we testing using metamask
+wallet ). 
+</P>
+<P STYLE="text-indent: 1.27cm; margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">
+For contract interactions directly  ABIs are present on ABI page .</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">Transfer
+token to option</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">D.
+Trump address: 0xfe2c3639d1b3934ce2e6af4c92d6d9d0640fb1ed</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">K.
+Harris address: 0x18830EE2E74F0843bd9Eef36E64B8052630a149b</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">You
+can check option addresses in proper State Question Voting contract.</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">Available
+from menu 
+</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">5.
+Verification from perspective of validator :</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">Best
+if you use few tabs in web explorer.</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">check
+- ask your potential friend for identification of document matching
+data entered in profile.</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">That
+what must be entered in profile is unique ID as encrypted with one
+way function an SSN or other if state using different way for unique
+ID distribution and marking of citizens.</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">Check
+if SSN number or other IDs number used in state for registration
+matching after encryption the uniqueID of profile.</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">Click
+encrypt to see if the hash numbers and letters match those entered in
+profile.</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">To
+check profile data you can see it Unique ID bassed on provided
+address of wallet or Unique ID generated from document alphanumeric
+number . Note that big and small letters generate different outcome
+so the alphanumeric number must match exactly that on document.</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">Duplicates
+of account are append with D1 or D2&hellip; before encryption. // czy
+mo�e after encryption.</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">Give
+notice to admin to mark as duplicates not active profiles for which
+duplicates are ready for verification, before they are verified all
+profiles created before must be deactivated from protocol.</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">Losing
+keys make whole process pointless and needs reverification of
+profile.</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">no
+ownership transfer of profile contract is possible.</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">After
+verification of profile check if it has role VERIFIED_PROFILE -should
+be true or checkProfil function should be true</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">and<FONT COLOR="#434343">
+</FONT><FONT FACE="Courier New, serif"><FONT SIZE=2 STYLE="font-size: 10pt"><B>checkVERIFIED_PROFILE
+also</B></FONT></FONT>  should be true</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-top: 0.42cm; margin-bottom: 0cm; line-height: 100%"><BR><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<a id="back-button" href="../index.html">Back</a>
+</BODY>
+</HTML>
